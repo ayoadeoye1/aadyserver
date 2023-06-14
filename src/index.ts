@@ -30,7 +30,9 @@ dbConnect().then(() =>{
 })
 
 app.use(cors({
-    origin: "*"
+  origin: "https://ayoadeoye-portfolio.netlify.app/",
+  methods: "*",
+  allowedHeaders: "*"
 }));
 
 app.use(express.json())

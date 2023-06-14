@@ -26,16 +26,7 @@ Content-Type: application/json
 }
 
 ###
-PATCH  http://localhost:8000/api/aboutmepatch/648706cfb93cba72f3b1bfe2
-Content-Type: application/json
-
-{
-  # "abouttext": "on Above!.",
-  "vid": "ourlbbnnnmnv jhv"
-}
-
-###
-GET https://aadyportfolioapi.cyclic.app/projectsget
+GET https://aadyportfolioapi.cyclic.app/api/blogget
 
 ###
 GET http://localhost:8000/api/blogget
