@@ -35,4 +35,7 @@ Content-Type: application/json
 }
 
 ###
-POST  http://localhost:8000/api/blogclap/
+GET https://aadyportfolioapi.cyclic.app/projectsget
+
+###
+GET http://localhost:8000/api/blogget
