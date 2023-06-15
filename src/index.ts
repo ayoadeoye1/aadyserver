@@ -29,23 +29,14 @@ dbConnect().then(() =>{
   })
 })
 
-// app.use(cors({
-//   origin: "",
-//   methods: "*",
-//   allowedHeaders: "*"
-// }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
 app.use(cors({
-  origin: 'https://ayoadeoye-portfolio.netlify.app',
+  origin: ["https://ayoadeoye-portfolio.netlify.app", "http://localhost:3000"],
   methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT'],
   allowedHeaders: ['Content-Type', 'Authorization'],
   credentials: true 
 }));
 
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
-
 app.use('/api', router);
-
-
-export default app;
