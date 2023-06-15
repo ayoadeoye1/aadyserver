@@ -1,6 +1,6 @@
 import * as express from 'express';
 import * as dotenv from 'dotenv';
-// import * as cors from 'cors';
+import * as cors from 'cors';
 import * as mongoose from 'mongoose';
 
 import router from './routes';
@@ -30,18 +30,17 @@ dbConnect().then(() =>{
 })
 
 // app.use(cors({
-//   origin: "https://ayoadeoye-portfolio.netlify.app",
+//   origin: "",
 //   methods: "*",
 //   allowedHeaders: "*"
 // }));
 
-app.use((req, res, next) =>{
-  res.header("Access-Control-Allow-Origin", "https://ayoadeoye-portfolio.netlify.app");
-  res.header("Access-Control-Allow-Methods", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-
-  next()
-})
+app.use(cors({
+  origin: 'https://ayoadeoye-portfolio.netlify.app',
+  methods: ['GET', 'POST', 'DELETE', 'PATCH', 'PUT'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true 
+}));
 
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
