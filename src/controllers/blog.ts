@@ -25,27 +25,29 @@ export const Bloggetone = async(req: Request, res: Response) =>{
 }
 
 export const Blogpost = async(req: Request, res: Response) =>{
-  const { title, blogArticle, clap } = req.body;
+  const { title, article, clap } = req.body;
+  
   const image = req.file;
   
-  if(!title || !blogArticle || !image){
-    res.status(400).json('inputs are required!');
+  if(!title || !article){
+    return res.status(400).json('inputs are required!');
   }
   
   try {
     const result = await cloudinary.uploader.upload(image.path);
-
+    
     const blog = new Blog({
       title,
       imageUrl: result.secure_url,
-      blogArticle,
+      blogArticle: article,
       clap
     });
 
     await blog.save();
 
-    res.status(200).json('project added!');
+    res.status(200).json('blog created!');
   } catch (error) {
+    console.log(error)
     res.status(500).json(error.message);
   }
 }

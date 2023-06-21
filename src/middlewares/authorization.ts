@@ -23,8 +23,8 @@ export const Authorize = async(req: Request, res: Response, next: NextFunction) 
 
     const id = Object.values(authUser)[0];
     const user = await AdminUser.findById({_id: id});
+    await user &&
     next();
-
   } catch (error) {
     res.status(500).json(error.message);
   }

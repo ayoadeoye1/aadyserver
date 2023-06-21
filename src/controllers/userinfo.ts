@@ -9,20 +9,21 @@ export const Usersdata = async(req: Request, res: Response) =>{
   try {
 
     const data = await ipData.getUserData(userIp);
-    const ipdat = new Ipdata({
-      ip: data.ip,
-      city: data.city,
-      region: data.region,
-      // languages: ,
-      country_name: data.country_name,
-      emoji_flag: data.emoji_flag,
-      currency: data.currency.name,
-      time_zone: data.time_zone.abbr+' || '+data.time_zone.current_time,
-      threat: data.threat.is_threat
-    });
+    // console.log(data)
+  //  const ipdat = new Ipdata({
+  //     ip: data.ip,
+  //     city: data.city,
+  //     region: data.region,
+  //     // languages: ,
+  //     country_name: data.country_name,
+  //     emoji_flag: data.emoji_flag,
+  //     currency: data.currency.name,
+  //     time_zone: data.time_zone.abbr+' || '+data.time_zone.current_time,
+  //     threat: data.threat.is_threat
+  //   }); 
     
-    await ipdat.save();
-    res.status(200).json('data scrappped!');
+    // await ipdat.save();
+    // res.status(200).json('data scrappped!');
   } catch (error) {
     console.log(error)
     res.status(500).json(error.message);

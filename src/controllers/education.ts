@@ -17,7 +17,7 @@ export const Edupost = async(req: Request, res: Response) =>{
   if(!institution || !course || !duration){
     res.status(400).json('inputs are required!');
   }
-  console.log(course)
+  
   try {
     const education = new Education({
       institution,

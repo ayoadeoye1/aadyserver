@@ -26,7 +26,25 @@ Content-Type: application/json
 }
 
 ###
+POST https://aadyportfolioapi.cyclic.app/api/sign-in
+Content-Type: application/json
+
+{
+    "username": "aady-admin",
+    "password": "admin001"
+}
+
+###
 GET https://aadyportfolioapi.cyclic.app/api/blogget
 
 ###
 GET http://localhost:8000/api/blogget
+
+###
+POST  http://localhost:8000/api/blogpost
+Content-Type: application/json
+
+{
+    "title": "aa",
+    "blogArticle": "adjhahhh"
+}

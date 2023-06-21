@@ -11,13 +11,14 @@ import { Mesjdelete, Mesjget, Mesjpost } from './controllers/message';
 import { AdminLogin, AdminReg } from './auth/auth.admin';
 import { Userdataget, Usersdata } from './controllers/userinfo';
 import { Authorize } from './middlewares/authorization';
+import * as cors from 'cors';
 
 const router = express.Router();
 
 
 
 //-----auth routes------
-router.post('/sign-in', AdminLogin);
+router.post('/sign-in', cors(), AdminLogin);
 router.post('/sign-up', Authorize, AdminReg); //secured
 
 
