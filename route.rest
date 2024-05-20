@@ -17,7 +17,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:8000/api/sign-in
+POST https://aady-server.onrender.com/api/sign-in
 Content-Type: application/json
 
 {
