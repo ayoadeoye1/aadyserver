@@ -5,13 +5,12 @@ import { JWT } from "../security/jwt";
 
 export const AdminLogin = async (req: Request, res: Response) => {
     try {
-        const { username, password } = req.body;
+        const { email, password } = req.body;
 
-        if (!username || !password) {
+        if (!email || !password) {
             return res.status(400).json("all inputs are required");
         }
-
-        const dbUser = await AdminUser.findOne({ username: username });
+        const dbUser = await AdminUser.findOne({ email: email });
 
         if (!dbUser) {
             return res.status(400).json("user does not exist");
@@ -21,7 +20,7 @@ export const AdminLogin = async (req: Request, res: Response) => {
             password,
             dbUser.password
         );
-        //fixxes
+
         if (!validatePassword) {
             return res.status(400).json("incorrect password");
         }
@@ -36,13 +35,19 @@ export const AdminLogin = async (req: Request, res: Response) => {
 };
 
 export const AdminReg = async (req: Request, res: Response) => {
-    const { username, email, password, cpassword } = req.body;
-
-    if (!username || !email || !password || !cpassword) {
-        return res.status(400).json("all input fields are required");
-    }
-
     try {
+        const { username, email, password, cpassword } = req.body;
+
+        if (!username || !email || !password || !cpassword) {
+            return res.status(400).json("all input fields are required");
+        }
+
+        const dbUser = await AdminUser.findOne({ email: email });
+
+        if (dbUser) {
+            return res.status(400).json("user does exist");
+        }
+
         if (cpassword !== password) {
             return res.status(400).json("password does not match");
         }
