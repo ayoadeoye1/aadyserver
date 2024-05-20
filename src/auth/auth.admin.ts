@@ -21,7 +21,7 @@ export const AdminLogin = async (req: Request, res: Response) => {
             password,
             dbUser.password
         );
-
+        //fixxes
         if (!validatePassword) {
             return res.status(400).json("incorrect password");
         }
