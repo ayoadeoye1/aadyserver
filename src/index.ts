@@ -34,10 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
     cors({
-        origin: [
-            "https://ayoadeoye-portfolio.netlify.app",
-            "http://localhost:3000",
-        ],
+        origin: ["https://ayoadeoye.netlify.app", "http://localhost:3000"],
         methods: ["GET", "POST", "DELETE", "PATCH", "PUT"],
         allowedHeaders: ["Content-Type", "Authorization"],
         credentials: true,
