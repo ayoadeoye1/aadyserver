@@ -1,82 +1,84 @@
-import Blog from '../models/blog';
-import { Request, Response } from 'express';
+import Blog from "../models/blog";
+import { Request, Response } from "express";
 
-import cloudinary from '../utils/cloudinary';
+import cloudinary from "../utils/cloudinary";
 
-export const Blogget = async(req: Request, res: Response) =>{
-  try {
-    const blogs = await Blog.find();
+export const Blogget = async (req: Request, res: Response) => {
+    try {
+        const blogs = await Blog.find().sort({ datePosted: -1 });
 
-    res.status(200).json(blogs);
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-}
+        res.status(200).json(blogs);
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+};
 
-export const Bloggetone = async(req: Request, res: Response) =>{
-  const { id } = req.params;
-  try {
-    const blogs = await Blog.findById({_id: id});
+export const Bloggetone = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    try {
+        const blogs = await Blog.findById({ _id: id });
 
-    res.status(200).json(blogs);
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-}
+        res.status(200).json(blogs);
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+};
 
-export const Blogpost = async(req: Request, res: Response) =>{
-  const { title, article, clap } = req.body;
-  
-  const image = req.file;
-  
-  if(!title || !article){
-    return res.status(400).json('inputs are required!');
-  }
-  
-  try {
-    const result = await cloudinary.uploader.upload(image.path);
-    
-    const blog = new Blog({
-      title,
-      imageUrl: result.secure_url,
-      blogArticle: article,
-      clap
-    });
+export const Blogpost = async (req: Request, res: Response) => {
+    const { title, article, clap } = req.body;
 
-    await blog.save();
+    const image = req.file;
 
-    res.status(200).json('blog created!');
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error.message);
-  }
-}
+    if (!title || !article) {
+        return res.status(400).json("inputs are required!");
+    }
 
+    try {
+        const result = await cloudinary.uploader.upload(image.path);
 
-export const Blogdelete = async(req: Request, res: Response) =>{
-  const { id } = req.params
-  console.log(id)
-  try {
-    const blog = await Blog.findOne({_id: id});
+        const blog = new Blog({
+            title,
+            imageUrl: result.secure_url,
+            blogArticle: article,
+            clap,
+        });
 
-    await cloudinary.uploader.destroy(blog.imageUrl)
-    await Blog.deleteOne({_id: blog.id})
+        await blog.save();
 
-    res.status(200).json('blog deleted');
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-}
+        res.status(200).json("blog created!");
+    } catch (error) {
+        console.log(error);
+        res.status(500).json(error.message);
+    }
+};
 
+export const Blogdelete = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    console.log(id);
+    try {
+        const blog = await Blog.findOne({ _id: id });
 
-export const Blogclap = async(req: Request, res: Response) =>{
-  const { id } = req.params
-  
-  try {
-    await Blog.findOneAndUpdate({_id: id}, {$inc: {'clap': 1}}, {new: true});
+        await cloudinary.uploader.destroy(blog.imageUrl);
+        await Blog.deleteOne({ _id: blog.id });
 
-    res.status(200).json('you clapped');
-  } catch (error) {
-    res.status(500).json(error.message);
-  }
-}
+        res.status(200).json("blog deleted");
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+};
+
+export const Blogclap = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    try {
+        await Blog.findOneAndUpdate(
+            { _id: id },
+            { $inc: { clap: 1 } },
+            { new: true }
+        );
+
+        res.status(200).json("you clapped");
+    } catch (error) {
+        res.status(500).json(error.message);
+    }
+};
